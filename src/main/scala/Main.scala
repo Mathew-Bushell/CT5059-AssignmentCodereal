@@ -1,5 +1,7 @@
 import scala.io.Source
 import scala.collection.mutable.ListBuffer
+import scala.collection.mutable.Map
+import scala.collection.mutable.ListMap
 object Main {
   def main(args:Array[String]):Unit = {
     val connectives: List[String] = List("a", "an", "the", "for", "and", "nor", "but", "or", "yet", "so", "to", "at", "by", "from", "in", "into", "of", "on", "onto", "with", "as", "than", "up", "down", "off", "out", "over", "under", "above", "about", "after", "around", "before", "through", "throughout", "therefore", "nonetheless", "whereas", "finally", "furthermore", "until", "upon", "within", "am", "thus", "however")
@@ -7,7 +9,7 @@ object Main {
     val emailFile = Source.fromFile("Email.txt")
     val filteredEmail = new ListBuffer[String]()
     val words = new ListBuffer[String]()
-
+    var wordFrequency = scala.collection.mutable.Map[String, Int]()
 
     for (line <- emailFile.getLines) {
       var standardLine = line.toLowerCase()
@@ -50,8 +52,14 @@ object Main {
     }
     val wordss = words.toList
     println(wordss)
-
-
+    for (word <- wordss) {
+      wordFrequency += (word -> filteredEmailList.count(_ == word))
+    }
+//    val wordFrequency = wordFrequency.toMap()
+    val wordFrequency2 = ListMap(wordFrequency.toSeq.sortWith(_._2>_._2):_*)
+//    println(wordFrequency2.keys)
+//    println(wordFrequency2.values)
+    println(wordFrequency2)
     var susScore = 0
     for(x <- filteredEmailList){
       for (flag <- flagWords){
