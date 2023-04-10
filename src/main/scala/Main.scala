@@ -56,11 +56,39 @@ object Main {
     for (word <- wordss) {
       wordFrequency += (word -> filteredEmailList.count(_ == word))
     }
-    val wordFrequency2 = wordFrequency.toSeq
+    var highest = 1
+    for ((key,value) <- wordFrequency){
+
+
+      if (value > highest){
+        highest = value
+//        println("highest= "+highest)
+      }else{
+//        println("highest remains same")
+      }
+//    set up a new mutable list to add the selected 10 words and a boolean to loop
+      val topTen = new mutable.ListBuffer[String]()
+      var loopN = 0
+      var noVal = true
+      var ignore = false
+      while (loopN < 10){
+        for ((key,value) <- wordFrequency){
+
+        }
+        loopN = loopN + 1
+        if (noVal == true){
+          highest = highest - 1
+          println(loopN)
+        }
+      Thread.sleep(1000)
+      }
+
+    }
+//    val wordFrequency2 = wordFrequency.toSeq
 //    val wordFrequency3 = ListMap(wordFrequency2.toSeq.sortWith(_._2>_._2):_*)
 //    println(wordFrequency2.keys)
 //    println(wordFrequency2.values)
-    println(wordFrequency2)
+//    println(wordFrequency2)
     var susScore = 0
     //take an int value for each map item and "blacklist" selected ones that are already in the top 5
     for(x <- filteredEmailList){
