@@ -1,8 +1,6 @@
 import scala.io.Source
-//import scala.collection.mutable.ListBuffer
 import scala.collection.mutable
-//import scala.collection.mutable.Map
-import scala.collection.mutable.ListMap
+
 object Main {
   def main(args:Array[String]):Unit = {
     val connectives: List[String] = List("a", "an", "the", "for", "and", "nor", "but", "or", "yet", "so", "to", "at", "by", "from", "in", "into", "of", "on", "onto", "with", "as", "than", "up", "down", "off", "out", "over", "under", "above", "about", "after", "around", "before", "through", "throughout", "therefore", "nonetheless", "whereas", "finally", "furthermore", "until", "upon", "within", "am", "thus", "however")
@@ -66,24 +64,40 @@ object Main {
       }else{
 //        println("highest remains same")
       }
+    }
 //    set up a new mutable list to add the selected 10 words and a boolean to loop
-      val topTen = new mutable.ListBuffer[String]()
-      var loopN = 0
-      var noVal = true
-      var ignore = false
-      while (loopN < 10){
-        for ((key,value) <- wordFrequency){
+    val topTen = new mutable.ListBuffer[String]()
+    var loopN = 0
+    var noVal = true
+    var ignore = false
+    while (loopN < 5) {
+      noVal = true
+      for ((key, value) <- wordFrequency) {
+        ignore = false
+        if (value == highest) {
+          for (x <- topTen) {
+            if (x == key) {
+              ignore = true
+            }
+          }
+          if (ignore != true && noVal == true) {
+            loopN = loopN + 1
+            topTen += key
+            noVal = false
+            println(key," = ", value)
 
+          }
         }
-        loopN = loopN + 1
-        if (noVal == true){
-          highest = highest - 1
-          println(loopN)
-        }
-      Thread.sleep(1000)
       }
 
+
+      if (noVal == true) {
+        highest = highest - 1
+//        println(loopN)
+      }
     }
+//    println(topTen)
+
 //    val wordFrequency2 = wordFrequency.toSeq
 //    val wordFrequency3 = ListMap(wordFrequency2.toSeq.sortWith(_._2>_._2):_*)
 //    println(wordFrequency2.keys)
@@ -91,10 +105,10 @@ object Main {
 //    println(wordFrequency2)
     var susScore = 0
     //take an int value for each map item and "blacklist" selected ones that are already in the top 5
-    for(x <- filteredEmailList){
+    for(x <- topTen){
       for (flag <- flagWords){
         if(x == flag){
-          susScore += 1
+          susScore += wordFrequency(x)
 
         }
       }
