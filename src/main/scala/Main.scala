@@ -50,7 +50,7 @@ object Main {
       }
     }
     val wordss = words.toList
-    println(wordss)
+//    println(wordss)
     for (word <- wordss) {
       wordFrequency += (word -> filteredEmailList.count(_ == word))
     }
@@ -113,7 +113,7 @@ object Main {
         }
       }
     }
-    println (susScore)
+//    println (susScore)
     if(susScore >= 5){
       println("This email has been classified as suspicious")
     }else{
